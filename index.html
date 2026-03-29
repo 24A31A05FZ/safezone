@@ -13,52 +13,574 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
-  <!-- SPA Router (loads before body) -->
-  <script src="navigation.js"></script>
+  <!-- SPA Router -->
+  <script src="js/navigation.js" defer></script>
+  <!-- Main App Logic -->
+  <script src="js/main.js" defer></script>
 </head>
 
 <body>
   <div class="bg-wrap"></div>
 
-  <!-- App Shell — partials injected here by loader -->
-  <div id="app-shell"></div>
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar" id="mainNavbar">
+    <a class="nav-logo" onclick="showPage('landing')">
+      <div class="nav-logo-icon"><i class="fas fa-shield-halved"></i></div>
+      SafeZone
+    </a>
+    <div class="nav-links" id="navLinks">
+      <button class="nav-link" onclick="goToSection('about')">About Us</button>
+      <button class="nav-link" onclick="goToSection('features')">Features</button>
+      <button class="nav-link" onclick="showPage('register')">Register</button>
+      <button class="nav-link" onclick="showPage('login')">Login</button>
+      <button class="nav-link primary" onclick="showPage('register')"><i class="fas fa-compass"></i> Explore Safety</button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme"><i class="fas fa-moon" id="themeIcon"></i></button>
+    </div>
+    <button class="nav-hamburger" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+  </nav>
 
-  <!-- Main App Logic -->
-  <script src="js/main.js"></script>
+  <!-- ═══ LANDING PAGE ═══ -->
+  <div class="page active" id="page-landing">
 
-  <!-- Partial Loader: fetch & inject all HTML sections -->
-  <script>
-    (function loadPartials() {
-      const partials = [
-        'html/navbar.html',
-        'html/landing.html',
-        'html/register.html',
-        'html/login.html',
-        'html/dashboard.html',
-        'html/modals.html',
-      ];
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="floating-orb orb1"></div>
+      <div class="floating-orb orb2"></div>
+      <span class="hero-badge"><i class="fas fa-location-dot"></i> AI-Powered Safety Platform</span>
+      <h1>Discover <span class="grad-text">Safe Places</span><br>Around You</h1>
+      <p>AI powered safety and locality recommendation platform. Know before you go — real-time alerts, safety scores,
+        and curated local recommendations.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="showPage('register')"><i class="fas fa-rocket"></i> Get Started Free</button>
+        <button class="btn btn-outline-light" onclick="scrollToSection('features')"><i class="fas fa-play"></i> See How It Works</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">50K+</div>
+          <div class="hero-stat-lbl">Safe Zones</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">200K+</div>
+          <div class="hero-stat-lbl">Users Protected</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">99.9%</div>
+          <div class="hero-stat-lbl">Uptime</div>
+        </div>
+      </div>
+    </section>
 
-      const shell = document.getElementById('app-shell');
+    <!-- FEATURES -->
+    <section id="features" style="padding:0 2rem 2rem">
+      <div class="section">
+        <div class="reveal">
+          <div class="section-label">What We Offer</div>
+          <div class="section-title">Everything you need to<br>stay safe &amp; informed</div>
+          <div class="section-sub">From real-time safety alerts to smart travel assistance — SafeZone has you covered everywhere you go.</div>
+        </div>
+        <div class="features-grid">
+          <div class="glass feature-card reveal">
+            <div class="feat-icon" style="background:#c0392b"><i class="fas fa-bell"></i></div>
+            <h3>Real-time Safety Alerts</h3>
+            <p>Instant notifications about safety incidents, weather emergencies, and local advisories in your area.</p>
+          </div>
+          <div class="glass feature-card reveal" style="transition-delay:0.1s">
+            <div class="feat-icon" style="background:#0b3d8f"><i class="fas fa-location-dot"></i></div>
+            <h3>Location Safety Zones</h3>
+            <p>Color-coded safety maps with green, yellow, and red zones powered by live data and community reports.</p>
+          </div>
+          <div class="glass feature-card reveal" style="transition-delay:0.2s">
+            <div class="feat-icon" style="background:#8b4513"><i class="fas fa-clock-rotate-left"></i></div>
+            <h3>Activity History Tracking</h3>
+            <p>Keep a log of all your visited places, planned routes, and safety check-ins in one organized view.</p>
+          </div>
+          <div class="glass feature-card reveal" style="transition-delay:0.3s">
+            <div class="feat-icon" style="background:#1e6b45"><i class="fas fa-robot"></i></div>
+            <h3>Smart Travel Assistant</h3>
+            <p>AI-driven recommendations based on your preferences, budget, safety requirements, and travel purpose.</p>
+          </div>
+          <div class="glass feature-card reveal" style="transition-delay:0.4s">
+            <div class="feat-icon" style="background:#8b0000"><i class="fas fa-phone-flip"></i></div>
+            <h3>Emergency SOS Support</h3>
+            <p>One-tap SOS alerts with automatic location sharing to emergency contacts and local authorities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      Promise.all(
-        partials.map(src =>
-          fetch(src)
-            .then(r => {
-              if (!r.ok) throw new Error('Failed to load: ' + src);
-              return r.text();
-            })
-        )
-      ).then(htmlParts => {
-        shell.innerHTML = htmlParts.join('\n');
-        // Trigger app init after all partials are in the DOM
-        if (typeof initApp === 'function') initApp();
-      }).catch(err => {
-        console.error('Partial load error:', err);
-        // Fallback: show error message in shell
-        shell.innerHTML = '<div style="padding:2rem;text-align:center;color:red">Error loading app sections. Please use a local server (Live Server / Netlify).</div>';
-      });
-    })();
-  </script>
+    <!-- ABOUT -->
+    <section id="about" style="padding:0 2rem 2rem">
+      <div class="section">
+        <div class="glass about-inner reveal">
+          <div>
+            <div class="section-label">About SafeZone</div>
+            <div class="section-title" style="font-size:2rem">Empowering safe exploration for everyone</div>
+            <p style="color:var(--text-muted);line-height:1.75;margin-top:1rem">SafeZone is an AI-powered platform
+              designed to help travellers, citizens, and daily commuters discover safe locations in real time. Whether
+              you're exploring a new city or navigating familiar streets, SafeZone provides data-driven safety scores,
+              curated recommendations, and instant emergency tools so you can move confidently. Our platform aggregates
+              data from local authorities, community reports, and verified sources to give you the most accurate safety
+              picture available.</p>
+            <div style="display:flex;gap:0.75rem;margin-top:1.75rem;flex-wrap:wrap">
+              <button class="btn btn-primary" onclick="showPage('register')"><i class="fas fa-user-plus"></i> Join SafeZone</button>
+              <button class="btn btn-outline" onclick="scrollToSection('features')"><i class="fas fa-info-circle"></i> Learn More</button>
+            </div>
+          </div>
+          <div class="about-visual">
+            <div class="glass about-stat-card"><div class="n">6+</div><div class="l">Cities Covered</div></div>
+            <div class="glass about-stat-card"><div class="n">98%</div><div class="l">Accuracy Rate</div></div>
+            <div class="glass about-stat-card"><div class="n">24/7</div><div class="l">Live Monitoring</div></div>
+            <div class="glass about-stat-card"><div class="n">5★</div><div class="l">User Rating</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOBILE APP -->
+    <section class="app-section">
+      <div class="reveal">
+        <div class="section-label" style="text-align:center">Download the App</div>
+        <div class="section-title" style="text-align:center;font-size:2rem">SafeZone in your pocket</div>
+        <p style="color:var(--text-muted);text-align:center;margin-top:0.5rem">Available on Android and iOS. Get real-time alerts anywhere.</p>
+      </div>
+      <div class="app-btns">
+        <a class="app-btn glass" href="#" onclick="showToast('Coming soon on Google Play!','info')">
+          <i class="fab fa-google-play"></i>
+          <div class="app-btn-text"><span>Get it on</span><strong>Google Play</strong></div>
+        </a>
+        <a class="app-btn glass" href="#" onclick="showToast('Coming soon on App Store!','info')">
+          <i class="fab fa-apple"></i>
+          <div class="app-btn-text"><span>Download on the</span><strong>App Store</strong></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background:var(--navy);padding:2.5rem 2rem;border-top:3px solid var(--gold)">
+      <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;align-items:start">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:800;color:var(--ivory);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem">
+            <i class="fas fa-shield-halved" style="color:var(--gold)"></i> SafeZone
+          </div>
+          <div style="font-size:0.82rem;color:rgba(250,248,242,0.5);line-height:1.65">AI-powered safety &amp; locality recommendation platform for travellers and citizens.</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:0.75rem">Contact Us</div>
+          <div style="display:flex;flex-direction:column;gap:0.55rem">
+            <a href="mailto:24a31a05fz@pragati.ac.in" style="display:flex;align-items:center;gap:0.6rem;color:rgba(250,248,242,0.75);text-decoration:none;font-size:0.85rem" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='rgba(250,248,242,0.75)'">
+              <i class="fas fa-envelope" style="color:var(--gold);width:16px"></i> 24a31a05fz@pragati.ac.in
+            </a>
+            <a href="tel:9618479557" style="display:flex;align-items:center;gap:0.6rem;color:rgba(250,248,242,0.75);text-decoration:none;font-size:0.85rem" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='rgba(250,248,242,0.75)'">
+              <i class="fas fa-phone" style="color:var(--gold);width:16px"></i> +91 96184 79557
+            </a>
+            <div style="display:flex;align-items:center;gap:0.6rem;color:rgba(250,248,242,0.75);font-size:0.85rem">
+              <i class="fas fa-map-marker-alt" style="color:var(--gold);width:16px"></i> Pragati Engineering College
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:0.75rem">Quick Links</div>
+          <div style="display:flex;flex-direction:column;gap:0.4rem">
+            <a onclick="scrollToSection('features')" style="color:rgba(250,248,242,0.65);font-size:0.84rem;cursor:pointer;text-decoration:none" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='rgba(250,248,242,0.65)'">Features</a>
+            <a onclick="scrollToSection('about')" style="color:rgba(250,248,242,0.65);font-size:0.84rem;cursor:pointer;text-decoration:none" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='rgba(250,248,242,0.65)'">About</a>
+            <a onclick="showPage('register')" style="color:rgba(250,248,242,0.65);font-size:0.84rem;cursor:pointer;text-decoration:none" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='rgba(250,248,242,0.65)'">Register</a>
+            <a onclick="showPage('login')" style="color:rgba(250,248,242,0.65);font-size:0.84rem;cursor:pointer;text-decoration:none" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='rgba(250,248,242,0.65)'">Login</a>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:2rem;padding-top:1.25rem;border-top:1px solid rgba(201,168,76,0.2);color:rgba(250,248,242,0.35);font-size:0.78rem">
+        © 2025 SafeZone. All rights reserved. Built to keep you safe.
+      </div>
+    </footer>
+
+  </div><!-- /#page-landing -->
+
+  <!-- ═══ REGISTER PAGE ═══ -->
+  <div class="page" id="page-register">
+    <div class="auth-page">
+      <div class="glass auth-card">
+        <div class="auth-logo-top" style="justify-content:flex-start;margin-bottom:1.25rem;color:var(--navy)">
+          <div class="icon" style="background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--gold)">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+          <span style="font-size:1.3rem;color:var(--navy)">SafeZone</span>
+        </div>
+        <div class="auth-title">Create Account</div>
+        <div class="auth-sub">Join SafeZone and start exploring safely today.</div>
+        <form id="registerForm" onsubmit="handleRegister(event)">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <div class="input-icon"><i class="fas fa-user"></i><input type="text" id="reg-name" class="form-input" placeholder="John Doe"></div>
+              <div class="error-msg" id="err-name">Please enter your full name.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <div class="input-icon"><i class="fas fa-phone"></i><input type="tel" id="reg-phone" class="form-input" placeholder="+91 9876543210"></div>
+              <div class="error-msg" id="err-phone">Enter a valid phone number.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <div class="input-icon"><i class="fas fa-envelope"></i><input type="email" id="reg-email" class="form-input" placeholder="you@example.com"></div>
+            <div class="error-msg" id="err-email">Please enter a valid email.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">City *</label>
+            <div class="input-icon"><i class="fas fa-city"></i>
+              <select id="reg-city" class="form-input form-select">
+                <option value="">Select your city...</option>
+                <option>Rajahmundry</option>
+                <option>Kakinada</option>
+                <option>Hyderabad</option>
+                <option>Bangalore</option>
+                <option>Delhi</option>
+                <option>Mumbai</option>
+              </select>
+            </div>
+            <div class="error-msg" id="err-city">Please select your city.</div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Password *</label>
+              <div class="input-icon" style="position:relative">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="reg-password" class="form-input" placeholder="Min 6 characters">
+                <button type="button" class="pass-toggle" onclick="togglePass('reg-password',this)"><i class="fas fa-eye"></i></button>
+              </div>
+              <div class="error-msg" id="err-password">Password must be at least 6 chars.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Confirm Password *</label>
+              <div class="input-icon" style="position:relative">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="reg-confirm" class="form-input" placeholder="Repeat password">
+                <button type="button" class="pass-toggle" onclick="togglePass('reg-confirm',this)"><i class="fas fa-eye"></i></button>
+              </div>
+              <div class="error-msg" id="err-confirm">Passwords do not match.</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem"><i class="fas fa-user-plus"></i> Create Account</button>
+        </form>
+        <div class="auth-footer">Already have an account? <a onclick="showPage('login')">Sign in</a></div>
+        <div style="text-align:center;margin-top:0.75rem">
+          <a onclick="showPage('landing')" style="font-size:0.82rem;color:var(--text-muted);cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem;text-decoration:none">
+            <i class="fas fa-arrow-left" style="font-size:0.75rem"></i> Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ LOGIN PAGE ═══ -->
+  <div class="page" id="page-login">
+    <div class="auth-page">
+      <div class="glass auth-card">
+        <div class="auth-logo-top" style="justify-content:flex-start;margin-bottom:1.25rem;color:var(--navy)">
+          <div class="icon" style="background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--gold)">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+          <span style="font-size:1.3rem;color:var(--navy)">SafeZone</span>
+        </div>
+        <div class="auth-title">Welcome Back</div>
+        <div class="auth-sub">Sign in to your SafeZone account.</div>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <div class="input-icon"><i class="fas fa-envelope"></i><input type="email" id="log-email" class="form-input" placeholder="you@example.com"></div>
+            <div class="error-msg" id="err-log-email">Please enter a valid email address.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <div class="input-icon" style="position:relative">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="log-password" class="form-input" placeholder="Your password">
+              <button type="button" class="pass-toggle" onclick="togglePass('log-password',this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <div class="error-msg" id="err-log-password">Please enter your password.</div>
+          </div>
+          <div class="error-msg" id="err-log-general" style="margin-bottom:0.75rem">Invalid email or password.</div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+        </form>
+        <div class="auth-footer">Don't have an account? <a onclick="showPage('register')">Sign up free</a></div>
+        <div style="text-align:center;margin-top:0.75rem">
+          <a onclick="showPage('landing')" style="font-size:0.82rem;color:var(--text-muted);cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem;text-decoration:none">
+            <i class="fas fa-arrow-left" style="font-size:0.75rem"></i> Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD PAGE ═══ -->
+  <div class="page" id="page-dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <a class="sidebar-logo" href="javascript:void(0)" onclick="showPage('landing')">
+        <div class="sidebar-logo-icon"><i class="fas fa-shield-halved"></i></div>
+        SafeZone
+      </a>
+      <ul class="sidebar-nav">
+        <li class="sidebar-section">Main</li>
+        <li><a class="active" onclick="switchDash('overview')" id="nav-overview"><i class="fas fa-gauge-high"></i> Dashboard</a></li>
+        <li><a onclick="switchDash('locality')" id="nav-locality"><i class="fas fa-map-location-dot"></i> Locality Rec.</a></li>
+        <li class="sidebar-section">Account</li>
+        <li><a onclick="switchDash('profile')" id="nav-profile"><i class="fas fa-user-circle"></i> Profile</a></li>
+        <li><button onclick="handleLogout()"><i class="fas fa-right-from-bracket"></i> Logout</button></li>
+      </ul>
+      <div class="sidebar-bottom">
+        <div class="user-chip">
+          <div class="user-avatar" id="sidebarAvatar">J</div>
+          <div>
+            <div class="user-name" id="sidebarName">John</div>
+            <div class="user-role">Explorer</div>
+          </div>
+          <button class="dash-theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="dashThemeIcon"></i></button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="dash-main">
+      <!-- DASHBOARD BANNER -->
+      <div class="dash-banner" id="dashBanner">
+        <div>
+          <div class="dash-banner-title" id="dashGreeting">Good morning 👋</div>
+          <div class="dash-banner-sub" id="dashBannerSub">Here's your safety summary for today</div>
+        </div>
+        <div class="dash-banner-right">
+          <div class="notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></div>
+        </div>
+      </div>
+
+      <div class="dash-content">
+
+        <!-- OVERVIEW SECTION -->
+        <div class="dash-section active" id="section-overview">
+          <!-- Top Cards -->
+          <div class="top-cards" id="topCards">
+            <div class="glass top-card skeleton" style="height:110px"></div>
+            <div class="glass top-card skeleton" style="height:110px"></div>
+            <div class="glass top-card skeleton" style="height:110px"></div>
+            <div class="glass top-card skeleton" style="height:110px"></div>
+          </div>
+
+          <!-- 2-col layout -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem">
+            <!-- Emergency -->
+            <div class="emergency-section glass">
+              <div style="font-size:0.88rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;color:var(--navy)">
+                <i class="fas fa-triangle-exclamation" style="color:var(--crimson-lt)"></i> Emergency
+              </div>
+              <button class="sos-btn" onclick="triggerSOS()"><i class="fas fa-phone-flip"></i> SOS EMERGENCY</button>
+              <div class="emergency-contacts" id="emergencyContacts"></div>
+            </div>
+
+            <!-- Assistant -->
+            <div>
+              <div style="font-size:0.88rem;font-weight:700;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;color:var(--navy)">
+                <i class="fas fa-headset" style="color:var(--gold)"></i> Quick Assistant
+              </div>
+              <div class="assistant-grid" id="assistantGrid"></div>
+            </div>
+          </div>
+
+          <!-- Activity -->
+          <div class="activity-grid" id="activityGrid"></div>
+        </div>
+
+        <!-- LOCALITY RECOMMENDATION SECTION -->
+        <div class="dash-section" id="section-locality">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--gold-pale)">
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:800;color:var(--navy)">Locality Recommendation</div>
+              <div style="color:var(--text-muted);font-size:0.85rem;margin-top:0.2rem" id="stepSubtitle">Find safe places near you</div>
+            </div>
+            <button class="btn btn-outline" onclick="resetRec()" id="recResetBtn" style="display:none"><i class="fas fa-rotate-left"></i> Start Over</button>
+          </div>
+
+          <!-- Step Indicator -->
+          <div class="step-indicator" id="stepIndicator">
+            <div class="step-dot active" id="sdot1">1</div>
+            <div class="step-line" id="sline1"></div>
+            <div class="step-dot" id="sdot2">2</div>
+            <div class="step-line" id="sline2"></div>
+            <div class="step-dot" id="sdot3">3</div>
+            <div class="step-line" id="sline3"></div>
+            <div class="step-dot" id="sdot4"><i class="fas fa-check" style="font-size:0.65rem"></i></div>
+          </div>
+
+          <!-- Step 1: City -->
+          <div class="rec-steps active" id="step1">
+            <div style="text-align:center;margin-bottom:0.5rem">
+              <div class="section-label">Step 1</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:800">Select a City</div>
+            </div>
+            <div class="city-grid" id="cityGrid"></div>
+            <div class="step-actions"><button class="btn btn-primary" onclick="goStep(2)" id="cityNextBtn" disabled><i class="fas fa-arrow-right"></i> Continue</button></div>
+          </div>
+
+          <!-- Step 2: Category -->
+          <div class="rec-steps" id="step2">
+            <div style="text-align:center;margin-bottom:0.5rem">
+              <div class="section-label">Step 2</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:800">Choose a Category</div>
+            </div>
+            <div class="cat-grid" id="catGrid"></div>
+            <div class="step-actions">
+              <button class="btn btn-outline" onclick="goStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" onclick="goStep(3)" id="catNextBtn" disabled><i class="fas fa-arrow-right"></i> Continue</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Preferences -->
+          <div class="rec-steps" id="step3">
+            <div style="text-align:center;margin-bottom:1rem">
+              <div class="section-label">Step 3</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:800">Set Your Preferences</div>
+            </div>
+            <div class="pref-form" id="prefFormInner">
+              <div class="form-group">
+                <label class="form-label">Budget Range — <span id="budgetVal">₹500</span></label>
+                <div class="range-wrap">
+                  <input type="range" min="100" max="5000" step="100" value="500" id="budgetRange" oninput="document.getElementById('budgetVal').textContent='₹'+this.value">
+                  <div class="range-labels"><span>₹100</span><span>₹5000</span></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Safety Level</label>
+                <div class="safety-select">
+                  <div class="safe-btn" data-level="low" onclick="setSafety('low',this)">⚠️ Low</div>
+                  <div class="safe-btn" data-level="medium" onclick="setSafety('medium',this)">🟡 Medium</div>
+                  <div class="safe-btn active" data-level="high" onclick="setSafety('high',this)">✅ High</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Minimum Rating</label>
+                <div class="rating-select" id="ratingSelect">
+                  <div class="rating-btn" onclick="setRatingPref(1,this)">⭐ 1+</div>
+                  <div class="rating-btn" onclick="setRatingPref(2,this)">⭐ 2+</div>
+                  <div class="rating-btn active" onclick="setRatingPref(3,this)">⭐ 3+</div>
+                  <div class="rating-btn" onclick="setRatingPref(4,this)">⭐ 4+</div>
+                  <div class="rating-btn" onclick="setRatingPref(5,this)">⭐ 5</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Ambience</label>
+                <select class="form-select" id="ambienceSelect">
+                  <option value="any">Any</option>
+                  <option value="family">👨‍👩‍👧 Family</option>
+                  <option value="friends">👫 Friends</option>
+                  <option value="business">💼 Business</option>
+                  <option value="travel">✈️ Travel</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Purpose of Visit</label>
+                <input type="text" class="form-input" id="purposeInput" placeholder="e.g. sightseeing, medical, dining...">
+              </div>
+            </div>
+            <div class="step-actions">
+              <button class="btn btn-outline" onclick="goStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" onclick="goStep(4)"><i class="fas fa-wand-magic-sparkles"></i> Find Places</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Results -->
+          <div class="rec-steps" id="step4">
+            <div class="ai-suggestion" id="aiSuggestion"></div>
+            <div class="results-header">
+              <div><span id="resultsTitle" style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:800"></span></div>
+              <div style="display:flex;gap:0.5rem;align-items:center">
+                <span style="font-size:0.8rem;color:var(--text-muted)">Sort:</span>
+                <select class="form-select" style="padding:0.4rem 0.6rem;width:auto" onchange="sortResults(this.value)">
+                  <option value="default">Featured</option>
+                  <option value="rating">Highest Rated</option>
+                  <option value="distance">Nearest</option>
+                  <option value="safety">Safety Score</option>
+                </select>
+              </div>
+            </div>
+            <div class="results-grid" id="resultsGrid"></div>
+            <div class="step-actions" style="margin-top:2rem">
+              <button class="btn btn-outline" onclick="goStep(3)"><i class="fas fa-arrow-left"></i> Adjust Preferences</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE SECTION -->
+        <div class="dash-section" id="section-profile">
+          <div style="margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--gold-pale)">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:800;color:var(--navy)">My Profile</div>
+            <div style="color:var(--text-muted);font-size:0.85rem;margin-top:0.2rem">Manage your account details</div>
+          </div>
+          <div class="glass profile-card">
+            <div class="profile-top">
+              <div class="profile-avatar-lg" id="profileAvatar">J</div>
+              <div>
+                <div class="profile-name" id="profileName">—</div>
+                <div class="profile-email" id="profileEmail">—</div>
+                <div class="profile-badge"><i class="fas fa-shield-check"></i> Verified Explorer</div>
+              </div>
+            </div>
+            <div class="profile-fields" id="profileFields"></div>
+          </div>
+          <div class="glass" style="padding:1.5rem;margin-top:1.25rem">
+            <div style="font-size:0.9rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem">
+              <i class="fas fa-heart" style="color:var(--danger)"></i> Saved Places
+            </div>
+            <div id="savedPlacesList" style="display:flex;flex-direction:column;gap:0.5rem"></div>
+          </div>
+        </div>
+
+      </div><!-- /.dash-content -->
+    </main>
+  </div><!-- /#page-dashboard -->
+
+  <!-- ═══ MODALS & UTILITIES ═══ -->
+
+  <!-- SOS MODAL -->
+  <div class="modal-overlay" id="sosModal">
+    <div class="modal-box">
+      <div class="modal-title" style="color:var(--danger)"><i class="fas fa-triangle-exclamation"></i> SOS Alert Sent!</div>
+      <div class="modal-body">Your SOS emergency alert has been dispatched to your emergency contacts and local
+        authorities. Help is on the way. Stay calm and stay in a safe location. Your current location has been shared.</div>
+      <div class="modal-actions">
+        <button class="btn btn-danger" onclick="closeModal('sosModal')">OK, I'm Safe Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HELPLINES MODAL -->
+  <div class="modal-overlay" id="helplinesModal" onclick="closeModal('helplinesModal')">
+    <div class="modal-box" style="max-width:580px;max-height:80vh;overflow-y:auto" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+        <div class="modal-title" style="color:var(--navy);display:flex;align-items:center;gap:0.6rem">
+          <i class="fas fa-phone-volume" style="color:var(--forest-lt)"></i> Emergency Helplines
+        </div>
+        <button onclick="closeModal('helplinesModal')" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted)">✕</button>
+      </div>
+      <div id="helplinesGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem"></div>
+    </div>
+  </div>
+
+  <!-- LANGUAGE MODAL -->
+  <div class="modal-overlay" id="languageModal" onclick="closeModal('languageModal')">
+    <div class="modal-box" style="max-width:640px;max-height:82vh;overflow-y:auto" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+        <div class="modal-title" style="color:var(--navy);display:flex;align-items:center;gap:0.6rem">
+          <i class="fas fa-language" style="color:var(--navy-light)"></i> Select Language
+        </div>
+        <button onclick="closeModal('languageModal')" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted)">✕</button>
+      </div>
+      <div style="margin-bottom:1rem;color:var(--text-muted);font-size:0.84rem">Choose your preferred language. The website interface will update accordingly.</div>
+      <div id="languageGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem"></div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
 </body>
 
 </html>

@@ -1,0 +1,76 @@
+<!-- ═══ REGISTER PAGE ═══ -->
+<div class="page" id="page-register">
+  <div class="auth-page">
+    <div class="glass auth-card">
+      <div class="auth-logo-top" style="justify-content:flex-start;margin-bottom:1.25rem;color:var(--navy)">
+        <div class="icon" style="background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--gold)">
+          <i class="fas fa-shield-halved"></i>
+        </div>
+        <span style="font-size:1.3rem;color:var(--navy)">SafeZone</span>
+      </div>
+      <div class="auth-title">Create Account</div>
+      <div class="auth-sub">Join SafeZone and start exploring safely today.</div>
+      <form id="registerForm" onsubmit="handleRegister(event)">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <div class="input-icon"><i class="fas fa-user"></i><input type="text" id="reg-name" class="form-input" placeholder="John Doe"></div>
+            <div class="error-msg" id="err-name">Please enter your full name.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <div class="input-icon"><i class="fas fa-phone"></i><input type="tel" id="reg-phone" class="form-input" placeholder="+91 9876543210"></div>
+            <div class="error-msg" id="err-phone">Enter a valid phone number.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <div class="input-icon"><i class="fas fa-envelope"></i><input type="email" id="reg-email" class="form-input" placeholder="you@example.com"></div>
+          <div class="error-msg" id="err-email">Please enter a valid email.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">City *</label>
+          <div class="input-icon"><i class="fas fa-city"></i>
+            <select id="reg-city" class="form-input form-select">
+              <option value="">Select your city...</option>
+              <option>Rajahmundry</option>
+              <option>Kakinada</option>
+              <option>Hyderabad</option>
+              <option>Bangalore</option>
+              <option>Delhi</option>
+              <option>Mumbai</option>
+            </select>
+          </div>
+          <div class="error-msg" id="err-city">Please select your city.</div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <div class="input-icon" style="position:relative">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="reg-password" class="form-input" placeholder="Min 6 characters">
+              <button type="button" class="pass-toggle" onclick="togglePass('reg-password',this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <div class="error-msg" id="err-password">Password must be at least 6 chars.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password *</label>
+            <div class="input-icon" style="position:relative">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="reg-confirm" class="form-input" placeholder="Repeat password">
+              <button type="button" class="pass-toggle" onclick="togglePass('reg-confirm',this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <div class="error-msg" id="err-confirm">Passwords do not match.</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem"><i class="fas fa-user-plus"></i> Create Account</button>
+      </form>
+      <div class="auth-footer">Already have an account? <a onclick="showPage('login')">Sign in</a></div>
+      <div style="text-align:center;margin-top:0.75rem">
+        <a onclick="showPage('landing')" style="font-size:0.82rem;color:var(--text-muted);cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem;text-decoration:none">
+          <i class="fas fa-arrow-left" style="font-size:0.75rem"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="mainNavbar">
+  <a class="nav-logo" onclick="showPage('landing')">
+    <div class="nav-logo-icon"><i class="fas fa-shield-halved"></i></div>
+    SafeZone
+  </a>
+  <div class="nav-links" id="navLinks">
+    <button class="nav-link" onclick="goToSection('about')">About Us</button>
+    <button class="nav-link" onclick="goToSection('features')">Features</button>
+    <button class="nav-link" onclick="showPage('register')">Register</button>
+    <button class="nav-link" onclick="showPage('login')">Login</button>
+    <button class="nav-link primary" onclick="showPage('register')"><i class="fas fa-compass"></i> Explore Safety</button>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme"><i class="fas fa-moon" id="themeIcon"></i></button>
+  </div>
+  <button class="nav-hamburger" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+</nav>

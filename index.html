@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeZone — Discover Safe Places Around You</title>
+  <meta name="description" content="AI-powered safety and locality recommendation platform. Know before you go — real-time alerts, safety scores, and curated local recommendations.">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- SPA Router (loads before body) -->
+  <script src="navigation.js"></script>
+</head>
+
+<body>
+  <div class="bg-wrap"></div>
+
+  <!-- App Shell — partials injected here by loader -->
+  <div id="app-shell"></div>
+
+  <!-- Main App Logic -->
+  <script src="js/main.js"></script>
+
+  <!-- Partial Loader: fetch & inject all HTML sections -->
+  <script>
+    (function loadPartials() {
+      const partials = [
+        'html/navbar.html',
+        'html/landing.html',
+        'html/register.html',
+        'html/login.html',
+        'html/dashboard.html',
+        'html/modals.html',
+      ];
+
+      const shell = document.getElementById('app-shell');
+
+      Promise.all(
+        partials.map(src =>
+          fetch(src)
+            .then(r => {
+              if (!r.ok) throw new Error('Failed to load: ' + src);
+              return r.text();
+            })
+        )
+      ).then(htmlParts => {
+        shell.innerHTML = htmlParts.join('\n');
+        // Trigger app init after all partials are in the DOM
+        if (typeof initApp === 'function') initApp();
+      }).catch(err => {
+        console.error('Partial load error:', err);
+        // Fallback: show error message in shell
+        shell.innerHTML = '<div style="padding:2rem;text-align:center;color:red">Error loading app sections. Please use a local server (Live Server / Netlify).</div>';
+      });
+    })();
+  </script>
+</body>
+
+</html>

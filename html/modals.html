@@ -1,0 +1,43 @@
+<!-- ═══ MODALS & UTILITIES ═══ -->
+
+<!-- SOS MODAL -->
+<div class="modal-overlay" id="sosModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:var(--danger)"><i class="fas fa-triangle-exclamation"></i> SOS Alert Sent!</div>
+    <div class="modal-body">Your SOS emergency alert has been dispatched to your emergency contacts and local
+      authorities. Help is on the way. Stay calm and stay in a safe location. Your current location has been shared.</div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" onclick="closeModal('sosModal')">OK, I'm Safe Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- HELPLINES MODAL -->
+<div class="modal-overlay" id="helplinesModal" onclick="closeModal('helplinesModal')">
+  <div class="modal-box" style="max-width:580px;max-height:80vh;overflow-y:auto" onclick="event.stopPropagation()">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+      <div class="modal-title" style="color:var(--navy);display:flex;align-items:center;gap:0.6rem">
+        <i class="fas fa-phone-volume" style="color:var(--forest-lt)"></i> Emergency Helplines
+      </div>
+      <button onclick="closeModal('helplinesModal')" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted)">✕</button>
+    </div>
+    <div id="helplinesGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem"></div>
+  </div>
+</div>
+
+<!-- LANGUAGE MODAL -->
+<div class="modal-overlay" id="languageModal" onclick="closeModal('languageModal')">
+  <div class="modal-box" style="max-width:640px;max-height:82vh;overflow-y:auto" onclick="event.stopPropagation()">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+      <div class="modal-title" style="color:var(--navy);display:flex;align-items:center;gap:0.6rem">
+        <i class="fas fa-language" style="color:var(--navy-light)"></i> Select Language
+      </div>
+      <button onclick="closeModal('languageModal')" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted)">✕</button>
+    </div>
+    <div style="margin-bottom:1rem;color:var(--text-muted);font-size:0.84rem">Choose your preferred language. The website interface will update accordingly.</div>
+    <div id="languageGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem"></div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>

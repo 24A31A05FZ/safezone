@@ -69,7 +69,7 @@ safezone/
 ├── index.html        # Main HTML file (SPA)
 ├── places.html       # Places page
 ├── main.doc.txt      # Documentation text file
-├── readme.md         # Project documentation (this file)
+
 ├── _redirects        # Netlify SPA routing config (/* → /index.html 200)
 ├── css/              # Stylesheet directory
 │   ├── places.css    # Places-specific styles
@@ -78,6 +78,7 @@ safezone/
 └── js/               # JavaScript directory
     ├── main.js       # Main application logic
     └── navigation.js # SPA router (History API, back-gesture guard)
+   ├── readme.md         # Project documentation (this file) 
 ```
 
 > All core logic, styles, and data live inside `index.html` as inline `<style>` and `<script>` blocks. The app runs directly from the file system — no build step, no npm, no server required.
@@ -172,9 +173,9 @@ No installation required. This is a zero-dependency, browser-based application.
 
 | Field | Details |
 |---|---|
-| **Name** | *(Your Name)* |
-| **Role** | *(e.g., Full Stack Developer / Student / Frontend Developer)* |
-| **LinkedIn** | *(https://www.linkedin.com/in/your-profile)* |
+| **Name** | Shaik Rasheed |
+| **Role** | Student |
+| **LinkedIn** | [linkedin.com/in/rasheed-shaik-248039350](https://www.linkedin.com/in/rasheed-shaik-248039350/) |
 
 ---
 

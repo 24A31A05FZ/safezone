@@ -965,14 +965,14 @@ const CAT_FA = {
   hospitals: { fa: 'fa-hospital', color: '#c0392b', bg: 'rgba(192,57,43,0.1)', photo: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80&auto=format&fit=crop' },
   restaurants: { fa: 'fa-utensils', color: '#d35400', bg: 'rgba(211,84,0,0.1)', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&auto=format&fit=crop' },
   banks: { fa: 'fa-building-columns', color: '#0b3d8f', bg: 'rgba(11,61,143,0.1)', photo: 'https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?w=600&q=80&auto=format&fit=crop' },
-  police: { fa: 'fa-shield-halved', color: '#1a3568', bg: 'rgba(26,53,104,0.1)', photo: 'https://images.unsplash.com/photo-1529528070066-01f5ec32a9e2?w=600&q=80&auto=format&fit=crop' },
+  police: { fa: 'fa-shield-halved', color: '#1a3568', bg: 'rgba(26,53,104,0.1)', photo: 'images/policestation.jpeg' },
   transport: { fa: 'fa-bus', color: '#1e6b45', bg: 'rgba(30,107,69,0.1)', photo: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80&auto=format&fit=crop' },
   tourist: { fa: 'fa-landmark', color: '#8b4513', bg: 'rgba(139,69,19,0.1)', photo: 'https://images.unsplash.com/photo-1526397751294-331021109fbd?w=600&q=80&auto=format&fit=crop' },
 };
 const CITY_FA = {
-  rajahmundry: { fa: 'fa-water', color: '#2980b9', photo: 'images/rajamundhry-godavari.jpg' },
+  rajahmundry: { fa: 'fa-water', color: '#2980b9', photo: 'images/rajahmundry-godavari.jpg' },
   kakinada: { fa: 'fa-anchor', color: '#1a3568', photo: 'images/kakinada-port.jpg' },
-  hyderabad: { fa: 'fa-chess-rook', color: '#8b4513', photo: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80&auto=format&fit=crop' },
+  hyderabad: { fa: 'fa-chess-rook', color: '#8b4513', photo: 'images/hyderabad.jpg' },
   bangalore: { fa: 'fa-laptop-code', color: '#2c3e50', photo: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=400&q=80&auto=format&fit=crop' },
   delhi: { fa: 'fa-mosque', color: '#c0392b', photo: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&q=80&auto=format&fit=crop' },
   mumbai: { fa: 'fa-city', color: '#0b3d8f', photo: 'https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=400&q=80&auto=format&fit=crop' },

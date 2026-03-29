@@ -66,11 +66,18 @@ Travelling to a new city or navigating unfamiliar neighbourhoods can be stressfu
 
 ```
 safezone/
-├── index.html        # Full app — HTML + CSS + JS in one file (SPA)
-├── navigation.js     # Standalone SPA router (History API, back-gesture guard)
-├── images/           # Local image assets
+├── index.html        # Main HTML file (SPA)
+├── places.html       # Places page
+├── main.doc.txt      # Documentation text file
+├── readme.md         # Project documentation (this file)
 ├── _redirects        # Netlify SPA routing config (/* → /index.html 200)
-└── README.md         # Project documentation (this file)
+├── css/              # Stylesheet directory
+│   ├── places.css    # Places-specific styles
+│   └── style.css     # Main stylesheet
+├── images/           # Local image assets
+└── js/               # JavaScript directory
+    ├── main.js       # Main application logic
+    └── navigation.js # SPA router (History API, back-gesture guard)
 ```
 
 > All core logic, styles, and data live inside `index.html` as inline `<style>` and `<script>` blocks. The app runs directly from the file system — no build step, no npm, no server required.
